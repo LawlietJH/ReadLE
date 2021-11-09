@@ -3,6 +3,8 @@
 
 ### Ejemplos:
 
+Podemos leer directamente un patrón.
+
 Código:
 ```py
 rle = '''
@@ -74,7 +76,7 @@ for p in pattern:
 
 xy = getXY(rle['rle'])
 
-print(f'\n\n x = {xy[0]}, y = {xy[1]}')
+print(f'\n x = {xy[0]}, y = {xy[1]}')
 ```
 
 Resultado:
@@ -125,7 +127,6 @@ de apariciones de ```<tag>``` y ```<tag>``` es uno de los siguientes tres caract
 Ejemplos
 
  El siguiente es un planeador (glider) en formato RLE:
-
 ```py
 #C This is a glider.
 x = 3, y = 3
@@ -142,7 +143,6 @@ bo$  -->  [b, o]    $  --> break ($)
 ```
 
 Visual: ```x = 3, y = 3```
-
 ```py
 1  ·  ■  ·
 2  ·  ·  ■
