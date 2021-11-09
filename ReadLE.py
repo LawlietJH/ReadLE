@@ -74,10 +74,37 @@ def readRLE(data):
 			rle.rle += row
 	return rle
 
-def getPattern(rle, x=0):
+def getXY(rle):
+	rle = rle.split('$')
+	digits = ''
+	num = 0
+	x = 0
+	for row in rle:
+		for col in row:
+			if col in 'bo1234567890':
+				if col.isdigit():
+					digits += col
+				else:
+					if digits:
+						num += int(digits)
+						digits = ''
+					else:
+						num += 1
+					if num > x:
+						x = num
+		digits = ''
+		num = 0
+	return x, len(rle)
+
+def getPattern(rle):
 	
 	if rle.__class__ == RLE:
 		rle, x = rle['rle','x']
+	elif rle.__class__ == dict:
+		rle = rle['rle']
+		x = getXY(rle)[0]
+	else:
+		x = getXY(rle)[0]
 	
 	pac = 1
 	pdc = 0
@@ -165,7 +192,7 @@ def setChars(values):
 	
 	return out
 
-def prettyPat(pattern):
+def prettyPat(pattern, clean=False):
 	
 	pat = setChars(pattern)
 	
@@ -173,41 +200,54 @@ def prettyPat(pattern):
 	
 	for i, row in enumerate(pat):
 		
-		print(str(i).rjust(2)+': ', end='')
+		if not clean:
+			print(str(i).rjust(2)+': ', end='')
 		
 		for j, col in enumerate(row):
 			
 			print(col, end='')
 			
-			if j == len(row)-1:
-				i = i - len(pat)//2
-				i = str(i)
-				if int(i) > 0:
-					i = '+'+i
-				print(i.rjust(3),end='')
+			if not clean:
+				if j == len(row)-1:
+					i = i - len(pat)//2
+					i = str(i)
+					if int(i) > 0:
+						i = '+'+i
+					print(i.rjust(3),end='')
 		
 		print()
 	
 	print('    ', end='')
 	
-	for i in range(len(row)):
-		
-		i = i - len(row)//2
-		i = str(i)
-		if int(i) > 0:
-			i = '+'+i
-		
-		print(i.center(3), end='')
+	if not clean:
+		for i in range(len(row)):
+			
+			i = i - len(row)//2
+			i = str(i)
+			if int(i) > 0:
+				i = '+'+i
+			
+			print(i.center(3), end='')
 	
 	print(f'\n\n x = {len(pat[0])}, y = {len(pat)}')
 
 #=======================================================================
 #=======================================================================
 #=======================================================================
-# Ejecución de prueba:
+# Ejecuciones de prueba:
+#---------------------------------------
 
-rle = readRLE('pattern.rle')
+rle = '''
+	2o$bo$bobo13b3o$2b2o3bo8bo3bo$6bob2o6bo4bo$5bo4bo6b2obo$
+	6bo3bo8bo3b2o$7b3o13bobo$25bo$25b2o!
+'''
 pattern = getPattern(rle)
+prettyPat(pattern)
+
+#---------------------------------------
+
+rle2 = readRLE('patterns/36p22.rle')
+pattern = getPattern(rle2)
 prettyPat(pattern)
 
 #=======================================================================
