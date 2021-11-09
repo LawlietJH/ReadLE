@@ -237,18 +237,35 @@ def prettyPat(pattern, clean=False):
 # Ejecuciones de prueba:
 #---------------------------------------
 
-rle = '''
-	2o$bo$bobo13b3o$2b2o3bo8bo3bo$6bob2o6bo4bo$5bo4bo6b2obo$
-	6bo3bo8bo3b2o$7b3o13bobo$25bo$25b2o!
-'''
-pattern = getPattern(rle)
-prettyPat(pattern)
-
-#---------------------------------------
-
-rle2 = readRLE('patterns/36p22.rle')
-pattern = getPattern(rle2)
-prettyPat(pattern)
+if __name__ == '__main__':
+	
+	rle = '''
+		2o$bo$bobo13b3o$2b2o3bo8bo3bo$6bob2o6bo4bo$5bo4bo6b2obo$
+		6bo3bo8bo3b2o$7b3o13bobo$25bo$25b2o!
+	'''
+	pattern = getPattern(rle)
+	prettyPat(pattern)
+	
+	#---------------------------------------
+	
+	rle = readRLE('patterns/36p22.rle')
+	pattern = getPattern(rle)
+	prettyPat(pattern)
+	
+	#---------------------------------------
+	
+	rle = readRLE('patterns/36p22.rle')
+	pattern = getPattern(rle)
+	prettyPat(pattern, clean=True)
+	
+	#---------------------------------------
+	
+	rle = readRLE('patterns/36p22.rle')
+	pattern = getPattern(rle)
+	for p in pattern:
+		print(p)
+	xy = getXY(rle['rle'])
+	print(f'\n x = {xy[0]}, y = {xy[1]}')
 
 #=======================================================================
 #=======================================================================
